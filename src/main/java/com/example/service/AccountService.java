@@ -29,4 +29,8 @@ public class AccountService {
         }
         return true;
     }
+
+    public Account getAccountById(int id){
+        return accountRepository.findById(id);
+    }
 }
