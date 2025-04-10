@@ -36,4 +36,8 @@ public class MessageService {
     public void updateMessage(Message message){
         messageRepository.save(message);
     }
+
+    public List<Message> getAllMessagesByAccountId(int id){
+        return messageRepository.findAllMessagesByAccountId(id);
+    }
 }
