@@ -1,7 +1,10 @@
 package com.example.controller;
 
+import com.azul.crs.client.Response;
 import com.example.entity.Account;
 import com.example.service.AccountService;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,16 +30,27 @@ public class SocialMediaController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody Account account){
+    public ResponseEntity<Account> register(@RequestBody Account account){
         if(!account.getUsername().isEmpty() &&
         account.getPassword().length() >= 4 && 
         accountService.getAccountByUsername(account.getUsername()) == null){
             accountService.register(account);
-            return ResponseEntity.ok().build();
+            Account registeredAccount = accountService.getAccountByUsername(account.getUsername());
+            return ResponseEntity.ok().body(registeredAccount);
         } else if (accountService.getAccountByUsername(account.getUsername()) != null){
             return ResponseEntity.status(409).build();
         } else {
             return ResponseEntity.status(400).build();
         }
+    }
+
+    @PostMapping("login")
+    public ResponseEntity<Account> login(@RequestBody Account account){
+        if(accountService.canLogin(account)){
+            Account loggedAccount = accountService.getAccountByUsername(account.getUsername());
+            return ResponseEntity.ok().body(loggedAccount);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }   
     }
 }

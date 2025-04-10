@@ -22,4 +22,11 @@ public class AccountService {
     public void register(Account account){
         accountRepository.save(account);
     }
+
+    public boolean canLogin(Account account){
+        if(accountRepository.findByUsernameAndPassword(account.getUsername(), account.getPassword()) == null){
+            return false;
+        }
+        return true;
+    }
 }
