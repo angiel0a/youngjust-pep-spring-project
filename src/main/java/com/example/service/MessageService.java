@@ -28,4 +28,8 @@ public class MessageService {
     public Message getMessageById(int id){
         return messageRepository.findById(id);
     }
+
+    public void deleteMessageById(int id){
+        messageRepository.deleteById(id);
+    }
 }
