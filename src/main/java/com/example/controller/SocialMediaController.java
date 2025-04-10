@@ -5,10 +5,13 @@ import com.example.entity.Message;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,5 +68,10 @@ public class SocialMediaController {
         } else {
             return ResponseEntity.status(400).build();
         }
+    }
+
+    @GetMapping("messages")
+    public ResponseEntity<List<Message>> getAllMessages(){
+        return ResponseEntity.ok().body(messageService.getAllMessages());
     }
 }
