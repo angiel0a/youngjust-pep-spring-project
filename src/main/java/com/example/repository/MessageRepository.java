@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.entity.Message;
 
+//new commit to see if my passing tests register
 @Repository
 public interface MessageRepository extends JpaRepository<Message,Integer> {
     Message findById(int id);
